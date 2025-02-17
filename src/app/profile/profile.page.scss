@@ -1,0 +1,32 @@
+@use "../home/home.page.scss" as *;
+
+.row{
+    margin-top: 30px;
+    width: 100%;
+    @include ion-flex(row , center, center);
+    gap: 4px;
+    ion-icon{
+        cursor: pointer;
+        font-size: 1.5rem;
+    }
+}
+
+@keyframes fadeIn {
+    0% {
+     opacity: 0;
+       bottom: 98%;
+    }
+    100% {
+        opacity: 1;
+bottom: 0;
+    }
+}
+
+app-register{
+    position: relative;
+    animation: fadeIn 0.5s;
+}
+app-login{
+    position: relative;
+    animation: fadeIn 0.5s;
+}

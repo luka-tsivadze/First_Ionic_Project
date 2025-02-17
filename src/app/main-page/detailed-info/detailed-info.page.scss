@@ -1,0 +1,54 @@
+@use "../../home/home.page.scss" as *;
+
+ion-header{
+ position: absolute;
+   
+  ion-back-button{
+    width: 50px;
+  }
+
+}
+ion-header{
+  width: 100%;
+  height:60vh;
+  filter: blur(0px);
+  ion-img{
+    height: 100%;
+  }
+  .body{
+  @include ion-flex(column, start, start);
+  gap: 5px;
+     .row{
+    width: 100%;
+        @include ion-flex(row , space-between, center);
+        ion-icon{
+            cursor: pointer;
+            font-size: 1.5rem;
+        }
+      
+  }
+  .block{
+    margin-top: 20px;
+    width: 100%;
+    border-top: 1px solid #FFFFFF;
+    border-bottom: 1px solid #FFFFFF;
+    @include ion-flex(row, space-around, center);
+    div{
+      width: 50%;
+       
+    }
+    .left{
+      border-right: 1px solid #FFFFFF;
+    }
+  }
+  .textPlace{
+  p{
+
+opacity: 0.7;
+    font-size: 13px;
+    line-height: 15.85px;
+    letter-spacing: 0%; 
+  }     
+  }
+}
+}

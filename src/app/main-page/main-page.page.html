@@ -1,0 +1,55 @@
+<ion-header [translucent]="true">
+  <ion-toolbar style="--background:transparent;">
+
+
+    <ion-select [(ngModel)]="selectedOption" class="ion-padding-start">
+      <ion-select-option *ngFor="let el of selected" [value]="el.value">
+        {{ el.text }}
+      </ion-select-option>
+    </ion-select>
+    <ion-progress-bar *ngIf="loading" type="indeterminate"></ion-progress-bar>
+  </ion-toolbar>
+</ion-header>
+
+
+
+
+<ion-content [fullscreen]="true">
+  <div class="wrap">
+    
+    <div class="buttonRow ion-padding">
+      <ion-button (click)="makeItActive(i)" shape="round" *ngFor="let el of buttons let i =index" class="{{el.class}} topBtn">
+        {{el.text}}
+      </ion-button>
+    </div>
+  </div>
+
+
+    <ion-card class="ion-padding mainCard">
+      <div class="leftSide">
+        <ion-card-header>
+          <ion-card-title>Fresh Styles Just In!</ion-card-title>
+          
+        </ion-card-header>
+        <ion-card-content>
+          Explore the latest trends and find your new favorite look. Shop our brand-new collection and stay ahead of the fashion curve.
+        </ion-card-content>
+      </div>  
+      <div class="rightSide">
+        <img src="../../assets/images/cardImg.png" alt="">
+      </div>
+    
+      </ion-card>
+      <div class="card-container">
+        <ion-card *ngFor="let el of cardProperties" >
+          <img routerLink="/main-page/{{el.id}}" alt="{{el.imgAlt}}" src='{{el.imgLink}}' />
+          <ion-card-content>
+<div class="row"><p>{{el.cardTitle}}</p>
+   <ion-icon name="heart-outline"></ion-icon>  </div>
+  <p>{{el.type}} </p>
+  <span>{{el.currency}} {{el.price}}</span>
+          </ion-card-content>
+        </ion-card>
+      </div>
+  
+</ion-content>

@@ -1,0 +1,49 @@
+<form [formGroup]="registrationForm"  (ngSubmit)="onSubmit()">
+  <ion-item>
+    <ion-label position="stacked">First Name</ion-label>
+    <ion-input type="text" formControlName="firstName" placeholder="Enter your first name"></ion-input>
+  </ion-item>
+  <ion-text color="danger" *ngIf="isFieldInvalid('firstName')">
+    First name is required.
+  </ion-text>
+
+  <ion-item>
+    <ion-label position="stacked">Last Name</ion-label>
+    <ion-input type="text" formControlName="lastName" placeholder="Enter your last name"></ion-input>
+  </ion-item>
+  <ion-text color="danger" *ngIf="isFieldInvalid('lastName')">
+    Last name is required.
+  </ion-text>
+
+  <ion-item>
+    <ion-label position="stacked">Email</ion-label>
+    <ion-input type="email" formControlName="email" placeholder="Enter your email"></ion-input>
+  </ion-item>
+  <ion-text color="danger" *ngIf="isFieldInvalid('email')">
+    A valid email is required.
+  </ion-text>
+
+  <ion-item>
+    <ion-label position="stacked">Password</ion-label>
+    <ion-input type="password" formControlName="password" placeholder="Enter your password"></ion-input>
+  </ion-item>
+  <ion-text color="danger" *ngIf="isFieldInvalid('password')">
+    Password is required (min 6 characters).
+  </ion-text>
+
+  <ion-item>
+    <ion-label position="stacked">Repeat Password</ion-label>
+    <ion-input
+      type="password"
+      formControlName="passwordRepeat"
+      placeholder="Repeat your password"
+    ></ion-input>
+  </ion-item>
+  <ion-text color="danger" *ngIf="isFieldInvalid('passwordRepeat')">
+    Passwords must match.
+  </ion-text>
+    
+  <ion-button expand="block" type="submit" [disabled]="registrationForm.invalid">
+    Register
+  </ion-button>
+</form>

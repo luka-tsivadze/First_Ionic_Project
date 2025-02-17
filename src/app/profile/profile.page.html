@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Registration</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" >
+
+  <app-register *ngIf="!stateServ.authorisation()"></app-register>
+  <app-login *ngIf="stateServ.authorisation()"></app-login>
+
+    <div class="row"><ion-button fill="{{RegActive.class}}" (click)="toReg()">Register</ion-button>
+       <ion-button fill="{{LogActive.class}}" (click)="toLog()">Login</ion-button></div>
+ 
+</ion-content>

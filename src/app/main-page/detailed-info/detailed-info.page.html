@@ -1,0 +1,49 @@
+<ion-header [translucent]="true" class="ion-padding ion-no-border">
+  <ion-toolbar style="--background: transparent;">
+    <ion-back-button></ion-back-button>
+    <ion-img slot="end" class="ion-padding" src="../../../assets/icon/Save-Icon.svg"></ion-img>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" >
+  <ion-header  class="ion-no-blur" >
+    <ion-img  slot="end" style="background-color:#94A676;" class="mainImg"  src="{{Values[0].imgLink}}"></ion-img>
+    <div class="body ion-padding" > <div class="row"><p>{{Values[0].cardTitle}}</p> <ion-icon name="heart-outline"></ion-icon></div>
+    <p> {{Values[0].type}}</p>
+    <span>{{Values[0].currency}} {{Values[0].price}}</span>
+    <div class="block">
+      <div class="left">
+        <ion-select  class="ion-padding-start"  placeholder="Color">
+          <ion-select-option>
+             Blue
+          </ion-select-option>
+          <ion-select-option>
+            Red
+         </ion-select-option>
+         <ion-select-option>
+          magesta
+       </ion-select-option>
+        </ion-select>
+      </div>
+      <div class="right">
+
+        <ion-select  class="ion-padding-start" placeholder="Size">
+          <ion-select-option>
+             S
+          </ion-select-option>
+          <ion-select-option>
+            M 
+         </ion-select-option>
+         <ion-select-option>
+          XX
+       </ion-select-option>
+        </ion-select>
+      </div>
+    </div>
+    <div class="textPlace">
+      <p class="ion-padding">{{Values[0].Description}} {{Values[0].Description}}</p> 
+      
+    </div>
+  </div>
+  </ion-header>
+</ion-content>

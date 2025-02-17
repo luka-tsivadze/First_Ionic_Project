@@ -1,0 +1,33 @@
+
+
+
+
+    <form (ngSubmit)="onLogin()" [class.animate]="animateForm" class="ion-padding"> 
+      <ion-item>
+        <ion-label position="stacked">Name or Email</ion-label>
+        <ion-input
+          type="text"
+          placeholder="Enter your name or email"
+          [(ngModel)]="loginData.username"
+          name="username"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label position="stacked">Password</ion-label>
+        <ion-input
+          type="password"
+          placeholder="Enter your password"
+          [(ngModel)]="loginData.password"
+          name="password"
+          required
+        ></ion-input>
+      </ion-item>
+
+      <ion-button
+        expand="block"   type="submit"        class="login-btn ion-padding"     [disabled]="!loginData.username || !loginData.password" >       Log In
+      </ion-button>
+    </form>
+ 
+

@@ -1,0 +1,232 @@
+{\rtf1\ansi\ansicpg1252\deff0\nouicompat\deflang1033{\fonttbl{\f0\fnil\fcharset0 Calibri;}{\f1\fnil\fcharset1 Calibri;}{\f2\fnil Segoe UI Symbol;}}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\sa200\sl276\slmult1\f0\fs22\lang9 import \{ Injectable \} from '@angular/core';\par
+import \{ AllCardsService \} from '../all-cards/all-cards.service';\par
+import \{ HttpClient \} from '@angular/common/http';\par
+import \{ BehaviorSubject \} from 'rxjs';\par
+\par
+interface FilterData \{\par
+  prop?: string;\par
+  local?: string;\par
+  areaMin?: number;\par
+  areaMax?: number;\par
+  priceMin?: number;\par
+  priceMax?: number;\par
+  statusi?: string;\par
+  badrooms?: string;\par
+  bathrooms?: string;\par
+  [key: string]: any;\par
+\}\par
+\par
+@Injectable(\{\par
+  providedIn: 'root',\par
+\})\par
+export class FilterDataUniterService \{\par
+  finalData: FilterData = \{\};\par
+  allCards: any[] = [];\par
+  wasCalled = false;\par
+\par
+  private filteredCardsSubject = new BehaviorSubject<any[]>([]);\par
+  filteredCards$ = this.filteredCardsSubject.asObservable();\par
+\par
+  // Moved the mapping out of the function for reusability.\par
+  private bilingualMapping = \{\par
+    tipi: \{\par
+      Apartment: ['Apartment', '\f1\lang1079\u4305?\u4312?\u4316?\u4304?'],\par
+      House: ['House', '\u4321?\u4304?\u4334?\u4314?\u4312?'],\par
+      Commercial: ['Commercial', '\u4313?\u4317?\u4315?\u4308?\u4320?\u4330?\u4312?\u4323?\u4314?\u4312?'],\par
+      Garage: ['Garage', '\u4306?\u4304?\u4320?\u4304?\u4319?\u4312?'],\par
+    \},\par
+    garigebis_tipi: \{\par
+      'For Sale': ['For Sale', '\u4312?\u4327?\u4312?\u4307?\u4308?\u4305?\u4304?'],\par
+      'For Rent': ['For Rent', '\u4325?\u4312?\u4320?\u4304?\u4309?\u4307?\u4308?\u4305?\u4304?'],\par
+      'Rented daily': ['Rented daily', '\u4325?\u4312?\u4320?\u4304?\u4309?\u4307?\u4308?\u4305?\u4304? \u4307?\u4326?\u4312?\u4323?\u4320?\u4304?\u4307?'],\par
+      Pledge: ['Pledge', '\u4306?\u4312?\u4320?\u4304?\u4309?\u4307?\u4308?\u4305?\u4304?'],\par
+      'Apartments Under Construction': ['Apartments Under Construction', '\f2\u8288?\f1\u4315?\u4328?\u4308?\u4316?\u4308?\u4305?\u4304?\u4320?\u4308? \u4305?\u4312?\u4316?\u4308?\u4305?\u4312?'],\par
+    \},\par
+    citys: \{\par
+      Tbilisi: ['Tbilisi', '\u4311?\u4305?\u4312?\u4314?\u4312?\u4321?\u4312?'],\par
+      Batumi: ['Batumi', '\u4305?\u4304?\u4311?\u4323?\u4315?\u4312?'],\par
+      Kutaisi: ['Kutaisi', '\u4325?\u4323?\u4311?\u4304?\u4312?\u4321?\u4312?'],\par
+      Rustavi: ['Rustavi', '\u4320?\u4323?\u4321?\u4311?\u4304?\u4309?\u4312?'],\par
+      Zugdidi: ['Zugdidi', '\u4310?\u4323?\u4306?\u4307?\u4312?\u4307?\u4312?'],\par
+      Telavi: ['Telavi', '\u4311?\u4308?\u4314?\u4304?\u4309?\u4312?'],\par
+      Bakuriani: ['Bakuriani', '\u4305?\u4304?\u4313?\u4323?\u4320?\u4312?\u4304?\u4316?\u4312?'],\par
+      Kobuleti: ['Kobuleti', '\u4325?\u4317?\u4305?\u4323?\u4314?\u4308?\u4311?\u4312?'],\par
+    \},\par
+  \};\par
+\par
+  constructor(private allCardsService: AllCardsService, private http: HttpClient) \{\}\par
+\par
+  transferData(data: any, filterNumber: number): void \{\par
+    this.wasCalled = true;\par
+    this.finalData = \{\};\par
+\par
+    if (filterNumber === 1) \{\par
+      this.finalData.prop = data.Propselect || '0';\par
+      this.finalData.local = data.locselect || '0';\par
+\par
+      if (data.sliders && data.sliders.length >= 2) \{\par
+        this.finalData.areaMin = data.sliders[0]?.min || 0;\par
+        this.finalData.areaMax = data.sliders[0]?.max || 0;\par
+        this.finalData.priceMin = data.sliders[1]?.min || 0;\par
+        this.finalData.priceMax = data.sliders[1]?.max || 0;\par
+      \} else \{\par
+        this.finalData.areaMin = 0;\par
+        this.finalData.areaMax = 0;\par
+        this.finalData.priceMin = 0;\par
+        this.finalData.priceMax = 0;\par
+      \}\par
+\par
+      this.finalData.statusi = data.propstatus || '0';\par
+      this.finalData.badrooms = data.selectInputs?.[0]?.value || '0';\par
+      this.finalData.bathrooms = data.selectInputs?.[1]?.value || '0';\par
+\par
+      // Fix conditional checks (compare both values explicitly)\par
+      if (\par
+        data.selectInputs?.[1]?.value === 'Bathrooms' ||\par
+        data.selectInputs?.[1]?.value === '\u4321?\u4304?\u4304?\u4305?\u4304?\u4310?\u4304?\u4316?\u4317?'\par
+      ) \{\par
+        this.finalData.bathrooms = '0';\par
+      \}\par
+      if (\par
+        data.selectInputs?.[0]?.value === 'Bedrooms' ||\par
+        data.selectInputs?.[0]?.value === '\u4321?\u4304?\u4331?\u4312?\u4316?\u4308?\u4305?\u4308?\u4314?\u4312?'\par
+      ) \{\par
+        this.finalData.badrooms = '0';\par
+      \}\par
+\par
+      const features = [\par
+        'Air Conditioning',\par
+        'Microwave',\par
+        'Refrigerator',\par
+        'Outdoor Shower',\par
+        'Window Covering',\par
+        'Alarm',\par
+        'Swimming Pool',\par
+        'Central Heating',\par
+        'Laundry Room',\par
+        'Gym',\par
+        'TV Cable & wifi',\par
+        'Dryer',\par
+        'Washer',\par
+      ];\par
+      features.forEach((feature) => \{\par
+        this.finalData[feature] = (data.checkboxes || []).some(\par
+          (box: any) => box.name === feature && box.checked\par
+        );\par
+      \});\par
+    \} else if (filterNumber === 2) \{\par
+      this.finalData.prop = data.propertyType || '0';\par
+      this.finalData.local = data.location || '0';\par
+\par
+      this.finalData.areaMin = data.areaMin || 0;\par
+      this.finalData.areaMax = data.areaMax || 0;\par
+      this.finalData.priceMin = data.priceMin || 0;\par
+      this.finalData.priceMax = data.priceMax || 0;\par
+\par
+      this.finalData.statusi = data.propertyStatus || '0';\par
+      this.finalData.badrooms = data.bedrooms !== 0 ? data.bedrooms : '0';\par
+      this.finalData.bathrooms = data.bathrooms !== 0 ? data.bathrooms : '0';\par
+\par
+      const features = [\par
+        'airConditioning',\par
+        'wifi',\par
+        'swimmingPool',\par
+        'tvCable',\par
+        'centralHeating',\par
+        'dryer',\par
+        'gym',\par
+        'washer',\par
+        'alarm',\par
+        'refrigerator',\par
+        'windowCovering',\par
+        'outdoorShower',\par
+        'laundryRoom',\par
+        'microwave',\par
+      ];\par
+      features.forEach((feature) => \{\par
+        this.finalData[feature] = data[feature] || false;\par
+      \});\par
+    \}\par
+\par
+    this.allCards = this.allCardsService.back_end_data;\par
+    console.log('final filtered Data', this.finalData);\par
+    console.log('allCards', this.allCards);\par
+    const filtered = this.filterCards(this.allCards, this.finalData);\par
+    this.filteredCardsSubject.next(filtered);\par
+  \}\par
+\par
+  filterCards(allCards: any[], filter: FilterData): any[] \{\par
+    const normalizeValue = (value: string, map: Record<string, string[]>): string | undefined => \{\par
+      if (!value) return undefined;\par
+      const lowerValue = value.toLowerCase();\par
+      return Object.keys(map).find((key) =>\par
+        map[key].some((mappedValue) => mappedValue.toLowerCase() === lowerValue)\par
+      );\par
+    \};\par
+\par
+    return allCards.filter((card) => \{\par
+      const normalizedTipi =\par
+        normalizeValue(card.tipi, this.bilingualMapping.tipi) || card.tipi;\par
+      const normalizedGarigebisTipi =\par
+        normalizeValue(card.garigebis_tipi, this.bilingualMapping.garigebis_tipi) ||\par
+        card.garigebis_tipi;\par
+      const normalizedCity =\par
+        normalizeValue(card.qalaqi, this.bilingualMapping.citys) || card.qalaqi;\par
+\par
+      const matchesPropertyStatus =\par
+        filter.statusi === '0' ||\par
+        this.bilingualMapping.garigebis_tipi[filter.statusi]?.includes(\par
+          normalizedGarigebisTipi\par
+        );\par
+      const matchesPropertyType =\par
+        filter.prop === '0' ||\par
+        this.bilingualMapping.tipi[filter.prop]?.includes(normalizedTipi);\par
+      const matchesLocation =\par
+        filter.local === '0' ||\par
+        this.bilingualMapping.citys[filter.local]?.includes(normalizedCity);\par
+      const matchesBedrooms =\par
+        filter.badrooms === '0' || card.sadzinebeli === filter.badrooms;\par
+      const matchesBathrooms =\par
+        filter.bathrooms === '0' ||\par
+        card.sveli_wertilebis_raodenoba === filter.bathrooms;\par
+\par
+      const cardArea = parseInt(card.fartobi, 10) || 0;\par
+      const cardPrice = parseInt(card.fasi, 10) || 0;\par
+      const matchesArea =\par
+        cardArea >= (filter.areaMin || 0) &&\par
+        cardArea <= (filter.areaMax || Infinity);\par
+      const matchesPrice =\par
+        cardPrice >= (filter.priceMin || 0) &&\par
+        cardPrice <= (filter.priceMax || Infinity);\par
+\par
+      const checkboxFilters = [\par
+        \{ key: 'airConditioning', field: 'kondincioneri' \},\par
+        \{ key: 'swimmingPool', field: 'sacurao_auzi' \},\par
+        \{ key: 'centralHeating', field: 'centraluri_gatboba' \},\par
+        \{ key: 'washer', field: 'samrecxao_otaxi' \},\par
+        \{ key: 'gym', field: 'sportuli_darbazi' \},\par
+        \{ key: 'alarm', field: 'signalizacia' \},\par
+        \{ key: 'tvCable', field: 'televizia_wifi' \},\par
+        \{ key: 'microwave', field: 'mikrotalguri' \},\par
+      ];\par
+      const matchesCheckboxes = checkboxFilters.every((\{ key, field \}) => \{\par
+        return !filter[key] || card[field] === 'true';\par
+      \});\par
+\par
+      return (\par
+        matchesPropertyStatus &&\par
+        matchesPropertyType &&\par
+        matchesLocation &&\par
+        matchesBedrooms &&\par
+        matchesBathrooms &&\par
+        matchesArea &&\par
+        matchesPrice &&\par
+        matchesCheckboxes\par
+      );\par
+    \});\par
+  \}\par
+\}\f0\lang9\par
+}
+ 
