@@ -23,7 +23,7 @@ However, at the moment, I am working as an Angular developer and managing a heav
 Other Work
 If you're interested, you can check out my other project, which I built entirely by myself:
  Website: FindHouse.ge
- GitHub: FindYourHouse Repository
+[ GitHub: FindYourHouse Repository](https://github.com/luka-tsivadze/FindYourHouse.git)
 
 Though it is modular and not a standalone project.
 
