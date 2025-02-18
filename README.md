@@ -17,6 +17,7 @@ Future Plans
 I plan to add:
 A "Save to Cart" feature
 Profile settings
+Auth Guard on Login/Register Components 
 However, at the moment, I am working as an Angular developer and managing a heavy workload. My primary focus is on making my other project responsive before the 28th deadline—which takes some time away from this Ionic project.
 
 Other Work
