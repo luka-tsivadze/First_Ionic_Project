@@ -10,6 +10,8 @@ For authentication, I implemented registration & login functionality that integr
 
 Additionally, the application includes an error page and validation errors in forms to enhance the user experience.
 
+and Finally this project design is meant for Mobile view so it would be best if you would use inspect.
+
 
 Future Plans
 I plan to add:
