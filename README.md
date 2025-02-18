@@ -8,9 +8,11 @@ This is a clothing application where products are fetched from AI-generated data
 
 For authentication, I implemented registration & login functionality that integrates with Firebase. The login system works based on the user's email key connection, and I use encryption to store it securely in localStorage as a token.
 
+Additionally, the application includes an error page and validation errors in forms to enhance the user experience.
+
+
 Future Plans
 I plan to add:
-
 A "Save to Cart" feature
 Profile settings
 However, at the moment, I am working as an Angular developer and managing a heavy workload. My primary focus is on making my other project responsive before the 28th deadline—which takes some time away from this Ionic project.
